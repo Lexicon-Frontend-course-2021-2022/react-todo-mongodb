@@ -27,7 +27,7 @@ class Todos extends Component {
               toggleCompleted={this.props.toggleCompleted}
               deleteTodo={this.props.deleteTodo}
               todo={todo}
-              key={todo._id}
+              key={todo.uuid}
             />
           );
 

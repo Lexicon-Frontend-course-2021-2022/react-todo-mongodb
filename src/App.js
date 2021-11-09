@@ -11,9 +11,11 @@ import './App.css';
 import AddTodo from './Components/AddTodo';
 import Todos from './Components/Todos';
 
+/* uuid */
+import { v4 as getUuid } from 'uuid';
 
+/* db */
 import * as Realm from 'realm-web';
-// import TodoItem from './Components/TodoItem';
 
 const REALM_APP_ID = 'application-0-sjscn';
 
@@ -54,15 +56,23 @@ class App extends React.Component {
   /** @brief Add Todo */
   addTodo = title => {
 
+    const todo = {
+      title,
+      uuid: getUuid(),
+      completed: false
+    };
+
+    /* Update state object first for snappy feel */
+    this.state.todos.push(todo);
+    this.setState(state => state);
+
     /* Add item to db */
-    this.db.insertOne({
-      title, completed: false
-    })
-      .then(res => {
+    this.db.insertOne(todo)
+
+      /* Catch db update error */
+      .catch(res => {
         this.db.find()
           .then(res => {
-
-            /* Update state */
             this.setState(
               {
                 todos: res
@@ -74,14 +84,14 @@ class App extends React.Component {
   /** @brief Toggle completed state */
   toggleCompleted = todo => {
 
-    /* Toggle state object first, to make toggles more responsive */
+    /* Update state object first for snappy feel */
     todo.completed = !todo.completed;
     this.setState(state => state);
 
     /* Then, actually update db */
     this.db.updateOne(
       {
-        _id: todo._id
+        uuid: todo.uuid
       },
       {
         completed: todo.completed,
@@ -103,19 +113,24 @@ class App extends React.Component {
   };
 
   /** @brief Delete todo */
-  deleteTodo = _id => {
+  deleteTodo = todo => {
+
+    const uuid = todo.uuid;
+
+    /* Update state object first for snappy feel */
+    this.state.todos = this.state.todos.filter(item => item !== todo);
+    this.setState(state => state);
 
     /* Remove item from db */
     this.db.deleteOne(
       {
-        _id
+        uuid
       }, {}
     )
-      .then(res => {
+      /* Catch db update error */
+      .catch(res => {
         this.db.find()
           .then(res => {
-
-            /* Update state */
             this.setState(
               {
                 todos: res

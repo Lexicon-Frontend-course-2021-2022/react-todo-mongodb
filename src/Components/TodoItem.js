@@ -39,14 +39,15 @@ class TodoItem extends Component {
   render() {
 
     /* Convenience */
-    const { completed, _id, title } = this.props.todo;
-    const deleteTodo = this.props.deleteTodo.bind(this, _id);
+    const { completed, title } = this.props.todo;
+    const deleteTodo = this.props.deleteTodo.bind(this, this.props.todo);
     const toggleCompleted = this.props.toggleCompleted.bind(this, this.props.todo);
 
     /* Render component */
     return (
       <div style={this.todoStyle()}>
         <p>
+
           <input type='checkbox'
             onChange={toggleCompleted}
             checked={completed}
@@ -57,6 +58,7 @@ class TodoItem extends Component {
           {title}
 
           <button onClick={deleteTodo} style={btnStyle}>X</button>
+
         </p>
       </div>
     )
