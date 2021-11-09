@@ -13,6 +13,7 @@ import Todos from './Components/Todos';
 
 
 import * as Realm from 'realm-web';
+// import TodoItem from './Components/TodoItem';
 
 const REALM_APP_ID = 'application-0-sjscn';
 
@@ -36,31 +37,32 @@ class App extends React.Component {
   /** @brief Lifecycle */
   async componentDidMount() {
 
-    this.app = new Realm.App(
-      {
-        id: REALM_APP_ID
-      }
-    )
-
+    /* Connect to db */
+    this.app = new Realm.App({ id: REALM_APP_ID })
     this.user = await this.app.logIn(Realm.Credentials.anonymous());
     this.db = await this.user.mongoClient('mongodb-atlas').db('db0').collection('collection0');
 
+    /* Populate todos from db */
     if (this.db) {
       this.setState({
         todos: await this.db.find()
       })
     }
+
   }
 
   /** @brief Add Todo */
   addTodo = title => {
 
+    /* Add item to db */
     this.db.insertOne({
       title, completed: false
     })
       .then(res => {
         this.db.find()
           .then(res => {
+
+            /* Update state */
             this.setState(
               {
                 todos: res
@@ -71,17 +73,24 @@ class App extends React.Component {
 
   /** @brief Toggle completed state */
   toggleCompleted = todo => {
+
+    /* Toggle state object first, to make toggles more responsive */
+    todo.completed = !todo.completed;
+    this.setState(state => state);
+
+    /* Then, actually update db */
     this.db.updateOne(
       {
         _id: todo._id
       },
       {
-        completed: !todo.completed,
+        completed: todo.completed,
         title: todo.title
       },
       {}
     )
-      .then(res => {
+      /* Catch db update error */
+      .catch(res => {
         this.db.find()
           .then(res => {
             this.setState(
@@ -95,18 +104,23 @@ class App extends React.Component {
 
   /** @brief Delete todo */
   deleteTodo = _id => {
+
+    /* Remove item from db */
     this.db.deleteOne(
       {
         _id
       }, {}
     )
       .then(res => {
-        this.setState
-          (
-            {
-              todos: [...this.state.todos.filter(todo => todo._id !== _id)]
-            }
-          )
+        this.db.find()
+          .then(res => {
+
+            /* Update state */
+            this.setState(
+              {
+                todos: res
+              });
+          });
       });
   }
 
