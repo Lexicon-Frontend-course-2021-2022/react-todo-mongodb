@@ -35,7 +35,7 @@ class TodoItem extends Component {
       <div style={this.todoStyle()}>
         <p>
 
-          <span class='checkbox' onClick={toggleCompleted}>
+          <span className='checkbox' onClick={toggleCompleted}>
             {completed ? '☑' : '☐'}
           </span>
 
@@ -45,7 +45,7 @@ class TodoItem extends Component {
             {title}
           </span>
 
-          <button onClick={deleteTodo} class="btn delete">X</button>
+          <button onClick={deleteTodo} className="btn delete">X</button>
 
         </p>
       </div >

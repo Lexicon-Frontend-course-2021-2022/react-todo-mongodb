@@ -32,20 +32,6 @@ a {
     padding: 0 1rem;
 }
 
-.btn {
-    display: inline-block;
-    border: none;
-    background-color: #555;   
-    color: #fff;
-    padding: 7px 20px;
-    cursor: pointer;
-    border-radius: 0 99px 99px 0;
-}
-
-.btn:hover {
-    background-color: #666;
-}
-
 #title {
     background-color: #ccc;
     border-radius: 99px 0 0 99px;
@@ -110,3 +96,25 @@ form {
     background: #f008;
     color: #ffff;
 }
+
+.btn {
+    display: inline-block;
+    border: none;
+    background-color: #0f08;   
+    color: #fff;
+    padding: 7px 20px;
+    cursor: pointer;
+    border-radius: 0 99px 99px 0;
+}
+
+.btn:hover {
+    background-color: #0f0a;
+}
+
+.btn[disabled] {
+    background-color: #ccc;
+    color: #aaa;
+    border-left: 1px dotted #0004;
+    cursor: unset;
+}
+

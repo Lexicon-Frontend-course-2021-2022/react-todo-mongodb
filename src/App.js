@@ -63,8 +63,9 @@ class App extends React.Component {
     };
 
     /* Update state object first for snappy feel */
-    this.state.todos.push(todo);
-    this.setState(state => state);
+    /* Don't mutate state object. Instead make a copy of todos and use setState() */
+    const todos = [...this.state.todos, todo];
+    this.setState({ todos });
 
     /* Add item to db */
     this.db.insertOne(todo)
@@ -84,9 +85,19 @@ class App extends React.Component {
   /** @brief Toggle completed state */
   toggleCompleted = todo => {
 
+    /* New completed state */
+    const completed = !todo.completed;
+
     /* Update state object first for snappy feel */
-    todo.completed = !todo.completed;
-    this.setState(state => state);
+    /* Don't mutate state object. Instead make a copy of todos and use setState() */
+    const todos = this.state.todos.map(item => {
+      if (item.uuid === todo.uuid) {
+        item.completed = completed;
+      }
+      return item;
+    });
+
+    this.setState({ todos });
 
     /* Then, actually update db */
     this.db.updateOne(
@@ -94,7 +105,8 @@ class App extends React.Component {
         uuid: todo.uuid
       },
       {
-        completed: todo.completed,
+        uuid: todo.uuid,
+        completed,
         title: todo.title
       },
       {}
@@ -118,8 +130,9 @@ class App extends React.Component {
     const uuid = todo.uuid;
 
     /* Update state object first for snappy feel */
-    this.state.todos = this.state.todos.filter(item => item !== todo);
-    this.setState(state => state);
+    /* Don't mutate state object. Instead make a copy of todos and use setState() */
+    const todos = this.state.todos.filter(item => item !== todo);
+    this.setState({ todos });
 
     /* Remove item from db */
     this.db.deleteOne(

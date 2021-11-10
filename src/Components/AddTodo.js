@@ -17,9 +17,6 @@ class AddTodo extends Component {
   constructor(props) {
     super(props);
 
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-
     this.addTodo = this.props.addTodo.bind(this)
 
     this.state = {
@@ -38,6 +35,9 @@ class AddTodo extends Component {
   /** @brief Event onChange */
   onChange = e => {
     this.setState({ title: e.target.value });
+
+    /* Toggle button state */
+    document.querySelector('#submit').disabled = (!e.target.value);
   }
 
   /** @brief Render component */
@@ -53,7 +53,8 @@ class AddTodo extends Component {
         />
 
         <input type='submit'
-          value='Submit' className='btn' style={{ flex: '1' }}
+          id='submit'
+          value='Submit' disabled className='btn' style={{ flex: '1' }}
         />
 
       </form>

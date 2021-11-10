@@ -6,7 +6,4 @@ build:
 
 PHONY: push
 push:
-	git add -A 
-	git commit 
-	git push
 	docker push thohell/react-todo-mongodb:latest
