@@ -7,6 +7,20 @@
 body {
     font-family: sans-serif;
     line-height: 1.4rem;
+    height: 100wh;
+    width: 100vw;
+    display: grid;
+    grid-template-rows: 64px calc(100vh - 94px) 30px;
+    background-image: url('https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77701336902-1024x640.jpg');
+    background-size: cover;
+}
+
+header {
+    background-color: #4448;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 a {
@@ -25,8 +39,74 @@ a {
     color: #fff;
     padding: 7px 20px;
     cursor: pointer;
+    border-radius: 0 99px 99px 0;
 }
 
 .btn:hover {
     background-color: #666;
+}
+
+#title {
+    background-color: #ccc;
+    border-radius: 99px 0 0 99px;
+    border: none;
+    text-indent: 10px;
+}
+
+#title:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+#title:hover {
+    background-color: #ddd;
+    outline: none;
+}
+
+.checkbox {
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+main {
+    color: #fffa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+footer {
+    background-color: #4448;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#root {
+    width: calc(100vw - 100px);
+    box-shadow: 10px 10px 20px #0008;
+    background-color: #4448;
+    padding: 10px  0px;
+    border-radius: 10px;
+}
+
+form {
+    margin-top: 20px;
+}
+
+.btn.delete {
+    background: #fff4;
+    color: #fff8;
+    border: none;
+    padding: 5px 9px;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    float: right;
+}
+
+.btn.delete:hover {
+    background: #f008;
+    color: #ffff;
 }

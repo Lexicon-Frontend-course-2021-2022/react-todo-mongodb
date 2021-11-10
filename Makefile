@@ -2,11 +2,11 @@
 # Build and upload docker image
 PHONY: build
 build:
-	sudo docker build --tag thohell/react-todo-mongodb:latest .
+	docker build --tag thohell/react-todo-mongodb:latest .
 
 PHONY: push
 push:
 	git add -A 
 	git commit 
 	git push
-	sudo docker push thohell/react-todo-mongodb:latest
+	docker push thohell/react-todo-mongodb:latest

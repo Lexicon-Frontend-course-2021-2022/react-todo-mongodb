@@ -8,17 +8,6 @@
 
 import React, { Component } from "react";
 
-/** @brief Style button */
-const btnStyle = {
-  background: '#555',
-  color: '#fff',
-  border: 'none',
-  padding: '5px 9px',
-  borderRadius: '50%',
-  outline: 'none',
-  cursor: 'pointer',
-  float: 'right'
-};
 
 /******************************************************************************
  @brief TodosItem Class
@@ -28,10 +17,8 @@ class TodoItem extends Component {
   /** @brief Style component dependent on completed state */
   todoStyle = () => {
     return {
-      background: '#f4f4f4',
       padding: '10px',
       borderBottom: '1px dotted #ccc',
-      textDecoration: this.props.todo.completed ? 'line-through' : 'none'
     };
   };
 
@@ -48,19 +35,20 @@ class TodoItem extends Component {
       <div style={this.todoStyle()}>
         <p>
 
-          <input type='checkbox'
-            onChange={toggleCompleted}
-            checked={completed}
-          />
+          <span class='checkbox' onClick={toggleCompleted}>
+            {completed ? '☑' : '☐'}
+          </span>
+
 
           {' '}
+          <span style={{ textDecoration: this.props.todo.completed ? 'line-through' : 'none' }}>
+            {title}
+          </span>
 
-          {title}
-
-          <button onClick={deleteTodo} style={btnStyle}>X</button>
+          <button onClick={deleteTodo} class="btn delete">X</button>
 
         </p>
-      </div>
+      </div >
     )
   }
 };

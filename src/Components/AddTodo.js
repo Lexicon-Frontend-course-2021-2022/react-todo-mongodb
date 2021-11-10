@@ -46,6 +46,7 @@ class AddTodo extends Component {
       <form style={{ display: 'flex' }} onSubmit={this.onSubmit}>
 
         <input type='text'
+          id='title'
           name='title' placeholder='Add todo...'
           style={{ flex: '10', padding: '5px' }} value={this.state.title}
           onChange={this.onChange}
